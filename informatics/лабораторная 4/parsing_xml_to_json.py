@@ -66,4 +66,4 @@ with open("schedule.xml", encoding="utf-8") as f:
 
 with open("schedule.json", 'w') as f2:
     for k in f:
-        print(f"{{'{k}': {f[k]}}}", file=f2)
+        print(f'{{"{k}": {f[k]}}}'.replace("'", '"'), file=f2)
