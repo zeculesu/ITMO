@@ -1,0 +1,18 @@
+<schedule>
+    <Friday>
+        <class1>
+            <time>10:00-11:30</time>
+            <auditorium>Ауд. Актовый зал (1216/0 (усл)), ул.Ломоносова, д.9, лит. М</auditorium>
+            <subject>Программирование</subject>
+            <lector>Письмак Алексей Евгеньевич</lector>
+            <format>Очно</format>
+        </class1>
+        <class2>
+            <time>15:20-16:50</time>
+            <auditorium>Ауд. 1328, Кронверкский пр., д.49, лит.А</auditorium>
+            <subject>Основы профессиональной деятельности</subject>
+            <lector>Клименков Сергей Викторович</lector>
+            <format>Очно</format>
+        </class2>
+    </Friday>
+</schedule>
