@@ -1,3 +1,11 @@
+def join_dict(dicts: list) -> dict:
+    new = {}
+    for dd in dicts:
+        for key, value in dd.items():
+            new[key] = value
+    return new
+
+
 def del_line_emptiness(tags: list):
     for el in tags:
         if el.isspace():
@@ -26,27 +34,36 @@ def istag(line: str) -> bool:
     return line[0] == "<" and line[-1] == ">"
 
 
+def get_tag(tag):
+    return tag[2:len(tag) - 1] if '</' in tag else tag[1:len(tag) - 1]
+
+
 def make_json(tags):
     if len(tags) == 3:
-        return {tags[0]: tags[1]}
-    if tags[0] == tags[-1].replace('/', ''):
-        tags = [tags[0], make_json(tags[1:len(tags)-1]), tags[-1]]
+        return {get_tag(tags[0]): tags[1]}
+    elif tags[0] == tags[-1].replace('/', ''):
+        nn = make_json(tags[1:len(tags) - 1])
+        if type(nn) == list:
+            nn = join_dict(nn)
+        tags = [tags[0], nn, tags[-1]]
         return make_json(tags)
     else:
         i = 0
         while any(type(el) == str for el in tags):
-            if istag(tags[i]) and not istag(tags[i + 1]) and tags[i+2] == tags[i][0] + "/" + tags[i][1:]:
-                new = {tags[i]: tags[i+1]}
-                tags = [*tags[:i], new, *tags[i+3:]]
+            if istag(tags[i]) and not istag(tags[i + 1]) and tags[i + 2] == tags[i][0] + "/" + tags[i][1:]:
+                tags = [*tags[:i], {get_tag(tags[i]): tags[i + 1]}, *tags[i + 3:]]
+            else:
+                j = i + 1
+                while tags[j] != tags[i][0] + "/" + tags[i][1:]:
+                    j += 1
+                tags = [*tags[:i], {get_tag(tags[i]): join_dict(make_json(tags[i + 1:j]))}, *tags[j + 1:]]
             i = (i + 1) % len(tags)
         return tags
 
 
-#s = '<class1><time>10:00-11:30</time><auditorium>Ауд. Актовый зал (1216/0 (усл)), ул.Ломоносова, д.9, лит. М</auditorium><subject>Программирование</subject><lector>Письмак Алексей Евгеньевич</lector><format>Очно</format></class1>'  # -> time: "-+-"
-#s = '<class1><time>10:00-11:30</time><auditorium>Ауд. Актовый зал (1216/0 (усл)), ул.Ломоносова, д.9, лит. М</auditorium></class1>'
-#s = find_tag(s)
-#print(make_json(s))
 with open("schedule.xml", encoding="utf-8") as f:
-    f = f.read()
-    f = find_tag(f)
-    print(make_json(f))
+    f = make_json(find_tag(f.read()))
+
+with open("schedule.json", 'w') as f2:
+    for k in f:
+        print(f"{{'{k}': {f[k]}}}", file=f2)
