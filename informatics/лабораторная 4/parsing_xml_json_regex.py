@@ -101,9 +101,14 @@ def make_json(tags):
         return tags
 
 
-with open("schedule.xml", encoding="utf-8") as f:
-    f = make_json(find_tag(f.read()))
+def main():
+    with open("schedule.xml", encoding="utf-8") as f:
+        f = make_json(find_tag(f.read()))
 
-with open("schedule2.json", 'w') as f2:
-    for k in f:
-        print(f'{{"{k}": {f[k]}}}'.replace("'", '"'), file=f2)
+    with open("schedule2.json", 'w') as f2:
+        for k in f:
+            print(f'{{"{k}": {f[k]}}}'.replace("'", '"'), file=f2)
+
+
+if __name__ == '__main__':
+    main()
