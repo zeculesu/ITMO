@@ -48,7 +48,7 @@ def make_json(tags):
     elif check_pars(tags[0], tags[-1]) and not tags.count(tags[0]) > 1:
         nn = make_json(tags[1:len(tags) - 1])
         if type(nn) == list:
-            if len(set([el for el in nn[0]])) == 1:
+            if len(set([k for el in nn for k in el])) == 1:
                 keyy = [el for el in nn[0]][0]
                 dd = {keyy: [k[keyy] for k in nn]}
                 tags = [tags[0], dd, tags[-1]]
