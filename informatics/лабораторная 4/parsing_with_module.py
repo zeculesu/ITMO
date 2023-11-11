@@ -2,7 +2,6 @@ import json
 import xmltodict
 
 
-
 def main():
     with open("schedule.xml", encoding="utf-8") as xml_file:
         data_dict = xmltodict.parse(xml_file.read())
