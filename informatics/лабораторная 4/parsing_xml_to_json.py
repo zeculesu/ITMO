@@ -1,8 +1,13 @@
 def join_dict(dicts: list) -> dict:
+    if len(dicts) == 1:
+        return dicts
     new = {}
-    for dd in dicts:
-        for key, value in dd.items():
-            new[key] = value
+    for d in dicts:
+        k = next(iter(d))
+        if k not in new:
+            new[k] = d[k]
+        else:
+            new[k] = [new[k], d[k]]
     return new
 
 
@@ -48,10 +53,7 @@ def make_json(tags):
     elif check_pars(tags[0], tags[-1]) and not tags.count(tags[0]) > 1:
         nn = make_json(tags[1:len(tags) - 1])
         if type(nn) == list:
-            if len(set([k for el in nn for k in el])) == 1:
-                keyy = [el for el in nn[0]][0]
-                dd = {keyy: [k[keyy] for k in nn]}
-                tags = [tags[0], dd, tags[-1]]
+            tags = [tags[0], join_dict(nn), tags[-1]]
         else:
             tags = [tags[0], nn, tags[-1]]
         return make_json(tags)
