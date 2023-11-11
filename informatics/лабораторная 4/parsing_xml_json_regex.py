@@ -1,3 +1,6 @@
+import re
+
+
 def join_dict(dicts: list) -> dict:
     new = {}
     for dd in dicts:
@@ -6,32 +9,17 @@ def join_dict(dicts: list) -> dict:
     return new
 
 
-def del_line_emptiness(tags: list):
-    for el in tags:
-        if el.isspace():
-            tags.remove(el)
-    return tags
+def get_text(line: list) -> list:
+    return [re.sub(rf'>.+<', word[1:][:-1], word) for word in line]
 
 
 def find_tag(line: str) -> list:
-    tags = []
-    st_tag, text = 0, ''
-    for i in range(len(line)):
-        if line[i] == "<":
-            if text:
-                tags.append(text)
-                text = ""
-            st_tag = i + 1
-        elif line[i] == ">":
-            tags.append(line[st_tag - 1:i + 1])
-            st_tag = 0
-        elif line[i - 1] == ">" or text != '':
-            text += line[i]
-    return del_line_emptiness(tags)
+    pattern = re.compile(r'<\w+>|</\w+>|>.+<')
+    return get_text([pattern.match(line[i:]).group() for i in range(len(line) - 1) if pattern.match(line[i:])])
 
 
 def is_tag(line: str) -> bool:
-    return line[0] == "<" and line[-1] == ">"
+    return True if re.fullmatch(r'<\w+>', line) else False
 
 
 def get_tag(tag):
@@ -58,7 +46,7 @@ def make_json(tags):
     else:
         i = 0
         while any(type(el) == str for el in tags):
-            if is_tag(tags[i]) and not is_tag(tags[i + 1]) and check_pars(tags[i + 2], tags[i]):
+            if is_tag(tags[i]) and not is_tag(tags[i + 1]) and check_pars(tags[i+2], tags[i]):
                 tags = [*tags[:i], {get_tag(tags[i]): tags[i + 1]}, *tags[i + 3:]]
             else:
                 j = i + 1
@@ -69,9 +57,13 @@ def make_json(tags):
         return tags
 
 
-with open("schedule.xml", encoding="utf-8") as f:
-    f = make_json(find_tag(f.read()))
+def main():
+    with open("schedule.xml", encoding="utf-8") as f:
+        f = make_json(find_tag(f.read()))
 
-with open("schedule1.json", 'w') as f2:
-    for k in f:
-        print(f'{{"{k}": {f[k]}}}'.replace("'", '"'), file=f2)
+    with open("schedule2.json", 'w') as f2:
+        for k in f:
+            print(f'{{"{k}": {f[k]}}}'.replace("'", '"'), file=f2)
+
+
+main()
