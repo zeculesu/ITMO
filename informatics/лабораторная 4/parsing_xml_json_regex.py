@@ -102,7 +102,7 @@ def make_json(tags):
 
 
 def main():
-    with open("schedule.xml", encoding="utf-8") as f:
+    with open("test.xml", encoding="utf-8") as f:
         f = make_json(find_tag(f.read()))
 
     with open("schedule2.json", 'w') as f2:

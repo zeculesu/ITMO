@@ -1,0 +1,29 @@
+{
+  "PurchaseOrder": {
+    "@PurchaseOrderNumber": "99503",
+    "@OrderDate": "1999-10-20",
+    "Address": [
+      {
+        "@Type": "Shipping",
+        "Country": "USA"
+      },
+      {
+        "@Type": "Billing",
+        "Name": "Tai Yee"
+      }
+    ],
+    "DeliveryNotes": "Please leave packages in shed by driveway.",
+    "Items": {
+      "Item": [
+        {
+          "@PartNumber": "872-AA",
+          "Quantity": "1"
+        },
+        {
+          "@PartNumber": "926-AA",
+          "Quantity": "2"
+        }
+      ]
+    }
+  }
+}
