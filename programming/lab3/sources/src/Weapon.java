@@ -1,15 +1,16 @@
-public class Cloth implements Thing{
+public class Weapon implements Thing {
     private String color;
     private String material;
 
+
     @Override
     public String getColor() {
-        return null;
+        return this.color;
     }
 
     @Override
     public String getMaterial() {
-        return null;
+        return this.material;
     }
 
     @Override
