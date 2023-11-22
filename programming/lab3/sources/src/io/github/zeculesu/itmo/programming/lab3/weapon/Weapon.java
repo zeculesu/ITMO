@@ -10,10 +10,12 @@ import java.util.Objects;
 public class Weapon extends Thing {
     private Attack typeAttack;
 
-    public Weapon(String color, String material, Attack typeAttack){
+    public Weapon(String color, String material, Attack typeAttack, String name){
         this.setColor(color);
         this.setMaterial(material);
         this.typeAttack = typeAttack;
+        this.setName(name);
+        System.out.println("Оружие <" + name + "> появилось в истории");
     }
 
     @Override

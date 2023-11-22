@@ -24,6 +24,7 @@ public class Human implements Takeable, Moveable {
         this.height = height;
         this.takenBy = null;
         this.damaged = false;
+        System.out.println("Человек <" + name + "> появился в истории");
     }
 
     @Override

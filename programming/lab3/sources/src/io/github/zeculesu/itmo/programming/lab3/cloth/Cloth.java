@@ -8,9 +8,11 @@ import java.util.Objects;
 public class Cloth extends Thing {
     private Human putOnBy;
 
-    public Cloth(String color, String material){
+    public Cloth(String color, String material, String name){
         this.setColor(color);
         this.setMaterial(material);
+        this.setName(name);
+        System.out.println("Одежда <" + name + "> появилась в истории");
     }
 
     @Override
