@@ -29,19 +29,5 @@ public class Main {
         policeman.take(pistol);
         Holster holster = new Holster(null, null);
         policeman.putOn(holster);
-//        Human Alice = new Human("Alice", Mood.NORMAL, 21);
-//        System.out.println(Alice.toString());
-//        Human Robert = new Human("Robert", Mood.NORMAL, 21);
-        // РОБЕРТ ВЗЯЛ АЛИСУ
-//        Alice.setTakenBy(Robert);
-//        Alice.setMovedBy(Robert);
-//        System.out.println(Alice);
-//        Whistle kdf = new Whistle(null, "plastic");
-//        Human Robert = new Human("Robert", Mood.NORMAL, 21);
-//        Human Alice = new Human("Alice", Mood.NORMAL, 21);
-//        Robert.take(kdf);
-//        Robert.damage(Alice, kdf);
-//        Robert.putOn(cloth_Robert);
-//        System.out.println(Robert.getInventory());
     }
 }
