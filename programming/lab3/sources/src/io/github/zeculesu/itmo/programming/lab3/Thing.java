@@ -1,11 +1,21 @@
 package io.github.zeculesu.itmo.programming.lab3;
 
 public abstract class Thing implements Takeable, Moveable {
+
+    private String name;
     private String color;
     private String material;
     private Human takenBy;
     private Human movedBy;
     private boolean damaged;
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getColor() {
         return this.color;

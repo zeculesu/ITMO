@@ -8,7 +8,6 @@ import io.github.zeculesu.itmo.programming.lab3.cloth.Cloth;
 import java.util.Objects;
 
 public class Weapon extends Thing {
-
     private Attack typeAttack;
 
     public Weapon(String color, String material, Attack typeAttack){

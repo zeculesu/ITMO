@@ -7,6 +7,7 @@ import io.github.zeculesu.itmo.programming.lab3.Thing;
 public class Whistle extends Weapon {
     public Whistle(String color, String material){
         super(color, material, Attack.PSYCHOLOGICAL);
+        this.setName("Свисток");
     }
 
     @Override

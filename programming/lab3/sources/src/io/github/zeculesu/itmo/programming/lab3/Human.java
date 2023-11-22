@@ -66,6 +66,7 @@ public class Human implements Takeable, Moveable {
     }
 
     public void setMood(Mood newMood) {
+        System.out.println(this.getName() + " сменил настроение с " + this.getMood() + " на " + newMood);
         this.mood = newMood;
     }
 
@@ -85,6 +86,7 @@ public class Human implements Takeable, Moveable {
     @Override
     public void setTakenBy(Human by) {
         this.takenBy = by;
+        System.out.println(this.getName() + " схвачен человеком " + by.getName());
     }
 
     public boolean getDamaged() {
@@ -103,23 +105,34 @@ public class Human implements Takeable, Moveable {
     @Override
     public void setMovedBy(Human by) {
         this.moveBy = by;
+        System.out.println(this.getName() + " перемещен человеком " + by.getName());
     }
 
     public ArrayList<Thing> getInventory() {
         return this.inventory;
     }
 
-    public void damage(Object whom, Weapon weapon){
+    public void damage(Object whom, Weapon weapon) {
+        if (whom instanceof Human){
+            Human whomSb = (Human) whom;
+            System.out.println(this.getName() + " наносит урон человеку " + whomSb.getName() + " с помощью " + weapon.getName());
+        }
+        else{
+            Thing whomSb = (Thing) whom;
+            System.out.println(this.getName() + " наносит урон предмету " + whomSb.getName() + " с помощью " + weapon.getName());
+        }
         weapon.gamage(whom);
     }
 
-    public void putOn(Cloth obj){
+    public void putOn(Cloth obj) {
         obj.setPutOnBy(this);
         this.inventory.add(obj);
+        System.out.println(this.getName() + " надел предмет " + obj.getName());
     }
 
-    public void take(Thing obj){
+    public void take(Thing obj) {
         obj.setTakenBy(this);
         this.inventory.add(obj);
+        System.out.println(this.getName() + " взял предмет " + obj.getName());
     }
 }
