@@ -1,9 +1,7 @@
 package io.github.zeculesu.itmo.programming.lab3;
 
 import io.github.zeculesu.itmo.programming.lab3.cloth.*;
-import io.github.zeculesu.itmo.programming.lab3.weapon.Baton;
-import io.github.zeculesu.itmo.programming.lab3.weapon.Pistol;
-import io.github.zeculesu.itmo.programming.lab3.weapon.Whistle;
+import io.github.zeculesu.itmo.programming.lab3.weapon.*;
 
 public class Main {
     public static void main(String[] args) {
