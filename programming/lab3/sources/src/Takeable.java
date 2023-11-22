@@ -1,2 +1,4 @@
-package PACKAGE_NAME;public interface Takeable {
+public interface Takeable {
+    public Human getTakenBy();
+    public void setTakenBy(Human by);
 }

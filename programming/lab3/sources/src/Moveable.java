@@ -1,2 +1,4 @@
-package PACKAGE_NAME;public interface Moveable {
+public interface Moveable {
+    public Human getMoveBy();
+    public void setMovedBy(Human by);
 }

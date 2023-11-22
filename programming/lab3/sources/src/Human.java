@@ -2,16 +2,11 @@ import kotlin.jvm.internal.Intrinsics;
 
 import java.util.Objects;
 
-public class Human {
+public class Human implements Takeable {
     private String name;
     private Mood mood;
     private int height;
-
-    public Human() {
-        name = "Коротышка";
-        mood = Mood.NORMAL;
-        height = 14;
-    }
+    private Human takenBy;
 
     public Human(String name, Mood mood, int height) {
         Intrinsics.checkNotNullParameter(name, "name");
@@ -19,6 +14,7 @@ public class Human {
         this.name = name;
         this.mood = mood;
         this.height = height;
+        this.takenBy = null;
     }
 
     @Override
@@ -33,7 +29,7 @@ public class Human {
 
     @Override
     public String toString() {
-        return String.format("<Human name='%s' mood=%s height=%d>", this.name, this.mood, this.height);
+        return String.format("<Human name='%s' mood=%s height=%d takenBy=%s>", this.name, this.mood, this.height, this.takenBy);
     }
 
     @Override
@@ -63,5 +59,15 @@ public class Human {
 
     public void setHeight(int newHeight) {
         this.height = newHeight;
+    }
+
+    @Override
+    public Human getTakenBy() {
+        return this.takenBy;
+    }
+
+    @Override
+    public void setTakenBy(Human by) {
+        this.takenBy = by;
     }
 }
