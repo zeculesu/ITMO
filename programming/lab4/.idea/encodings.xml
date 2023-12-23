@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/src/Action.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/Baton.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/Cloth.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/DoNothing.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/Grab.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/Human.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/Main.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/Pistol.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/PullAway.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/TurnPale.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/Weapon.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/Whistle.java" charset="windows-1251" />
+    <file url="PROJECT" charset="windows-1251" />
+  </component>
+</project>

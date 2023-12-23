@@ -8,12 +8,13 @@ public class Weapon extends Thing {
         this.setMaterial(material);
         this.typeAttack = typeAttack;
         this.setName(name);
-        System.out.println("РћСЂСѓР¶РёРµ <" + name + "> РїРѕСЏРІРёР»РѕСЃСЊ РІ РёСЃС‚РѕСЂРёРё");
+        this.takeDamage(false);
+        System.out.println("Оружие <" + name + "> появилось в истории");
     }
 
     @Override
     public String toString() {
-        return String.format("<Weapon name=%s color=%s material=%s typeAttack=%s takenBy=%s movedBy=%s>", this.getName(), this.getColor(), this.getMaterial(), this.getTypeAttack(), this.getTakenBy(), this.getMovedBy());
+        return String.format("<Weapon name=%s color=%s material=%s typeAttack=%s>", this.name(), this.getColor(), this.getMaterial(), this.getTypeAttack());
     }
 
     @Override
@@ -34,12 +35,12 @@ public class Weapon extends Thing {
 
     public void damage(Object whom) {
         if (!(whom instanceof Human) & !(whom instanceof Thing)){
-            System.out.println("Р­С‚Рѕ РЅРµР»СЊР·СЏ РїРѕРІСЂРµРґРёС‚СЊ");
+            System.out.println("Это нельзя повредить");
         }
         if (whom instanceof Human whoHuman) {
-            whoHuman.setDamaged(true);
+            whoHuman.takeDamage(true);
         } else if ((whom instanceof Thing whoThing) ) {
-            whoThing.setDamaged(true);
+            whoThing.takeDamage(true);
         }
     }
 

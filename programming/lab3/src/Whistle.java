@@ -9,11 +9,11 @@ public class Whistle extends Weapon {
         if (!(whom instanceof Human) & !(whom instanceof Thing)){
             System.out.println("Это нельзя повредить");
         }
-        System.out.println(this.getTakenBy().getName() + " свистит в свисток и психологически давит");
+        System.out.println("свисток свистик и психологически давит");
         if (whom instanceof Human whoHuman) {
-            whoHuman.setDamaged(true);
+            whoHuman.takeDamage(true);
         } else if ((whom instanceof Thing whoThing) ) {
-            whoThing.setDamaged(true);
+            whoThing.takeDamage(true);
         }
     }
 }
