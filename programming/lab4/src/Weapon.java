@@ -33,9 +33,9 @@ public class Weapon extends Thing {
         return Objects.hash(this.getColor(), this.getMaterial(), this.getTypeAttack());
     }
 
-    public void damage(Object whom) {
+    public void damage(Object whom) throws DamageException{
         if (!(whom instanceof Human) & !(whom instanceof Thing)){
-            System.out.println("Это нельзя повредить");
+            throw new DamageException("Это нельзя повредить");
         }
         if (whom instanceof Human whoHuman) {
             whoHuman.takeDamage(true);

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Human implements Namable, Takeable, Damagable{
+public class Human implements Namable, Takeable, Damagable {
     private String name;
     private Mood mood;
     private int height;
@@ -11,7 +11,10 @@ public class Human implements Namable, Takeable, Damagable{
     private ArrayList<Thing> inventory = new ArrayList<>();
 
 
-    public Human(String name, Mood mood, int height) {
+    public Human(String name, Mood mood, int height) throws NamingException{
+        if (name.isEmpty()){
+            throw new NamingException("А имя ты дома не забыл?");
+        }
         this.name = name;
         this.mood = mood;
         this.height = height;
@@ -77,22 +80,24 @@ public class Human implements Namable, Takeable, Damagable{
         return this.name;
     }
 
-   public void doSomething(Action a){
+    public void doSomething(Action a) {
         a.doIt(this);
     }
-    public void doSomethingWithWhom(Action a, Namable whom){
+
+    public void doSomethingWithWhom(Action a, Namable whom) {
         a.doIt(whom);
+        System.out.println(" и сделал это " + this.name());
     }
 
 
-    public void damage(Object whom, Weapon weapon) {
-        if (whom instanceof Human){
+    public void damage(Object whom, Weapon weapon) throws DamageException {
+        if (whom instanceof Human) {
             Human whomSb = (Human) whom;
             System.out.println(this.name() + " наносит урон человеку " + whomSb.name() + " с помощью " + weapon.name());
-        }
-        else{
-            Thing whomSb = (Thing) whom;
+        } else if (whom instanceof Thing whomSb) {
             System.out.println(this.name() + " наносит урон предмету " + whomSb.name() + " с помощью " + weapon.name());
+        } else {
+            throw new DamageException("Низя такое бить");
         }
         weapon.damage(whom);
     }
@@ -103,9 +108,29 @@ public class Human implements Namable, Takeable, Damagable{
         System.out.println(this.name() + " взял предмет " + obj.name());
     }
 
-    public static class Thought{
-        public static void think(String name, String about){
-            System.out.println(name + " подумал о " + about);
+    public class Thought {
+        private String thought;
+        public Thought(String thought){
+            this.thought = thought;
+        }
+
+        // мысль думается
+        public void think() {
+            System.out.println(Human.this.name() + " подумал: " + this.thought);
+        }
+    }
+
+    public static class HeightHuman{
+        public static void checkerHeight(int height){
+            if (12 <= height & height <= 15){
+                System.out.println("Коротышка нормального роста");
+            }
+            else if (height > 15){
+                System.out.println("Рослый коротышка");
+            }
+            else{
+                System.out.println("Это уже какой-то микрокоротышка");
+            }
         }
     }
 }
