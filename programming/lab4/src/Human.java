@@ -109,7 +109,7 @@ public class Human implements Namable, Takeable, Damagable {
     }
 
     public class Thought {
-        private String thought;
+        private final String thought;
         public Thought(String thought){
             this.thought = thought;
         }
