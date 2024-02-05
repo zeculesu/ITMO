@@ -35,7 +35,7 @@ public class Weapon extends Thing {
 
     public void damage(Object whom) throws DamageException{
         if (!(whom instanceof Human) & !(whom instanceof Thing)){
-            throw new DamageException("Это нельзя повредить");
+            throw new DamageException(whom, this);
         }
         if (whom instanceof Human whoHuman) {
             whoHuman.takeDamage(true);

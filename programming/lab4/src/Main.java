@@ -1,7 +1,8 @@
+import java.lang.reflect.Field;
+
 public class Main {
     public static void main(String[] args) {
         try {
-
             Human dunno = new Human("Незнайка", Mood.NORMAL, 16);
             Human.Thought thought = dunno.new Thought("Это всё какое-то недоразумение или сон");
             thought.think();
@@ -57,11 +58,9 @@ public class Main {
 
             dunno.doSomethingWithWhom(new Smelling(), baton);
 
-        }
-        catch (DamageException ex){
+        } catch (DamageException ex) {
             System.out.println("DamageException catched: " + ex.getMessage());
-        }
-        catch (NamingException ex){
+        } catch (NamingException ex) {
             System.out.println("NamingException catched: " + ex.getMessage());
         }
     }

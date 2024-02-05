@@ -97,7 +97,7 @@ public class Human implements Namable, Takeable, Damagable {
         } else if (whom instanceof Thing whomSb) {
             System.out.println(this.name() + " наносит урон предмету " + whomSb.name() + " с помощью " + weapon.name());
         } else {
-            throw new DamageException("Низя такое бить");
+            throw new DamageException(whom, weapon);
         }
         weapon.damage(whom);
     }
