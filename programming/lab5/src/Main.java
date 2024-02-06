@@ -1,5 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        Commander commander = new Commander(System.getenv("FILENAME"));
+        commander.start();
     }
 }
