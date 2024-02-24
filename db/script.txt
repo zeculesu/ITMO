@@ -1,0 +1,42 @@
+
+-- create
+CREATE TABLE OBJECT_OBVERSATION (
+  id SERIAL PRIMARY KEY,
+  name varchar(32) NOT NULL,
+  shape TEXT NOT NULL,
+  brightness INTEGER default 0
+);
+CREATE TYPE State_EQUIPMENT AS ENUM ('Включен', 'Выключен', 'Сломан');
+CREATE TABLE TYPE_EQUIPMENT (
+  id SERIAL PRIMARY KEY,
+  type TEXT NOT NULL,
+  purpose TEXT NOT NULL
+);
+CREATE TABLE EQUIPMENT (
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL,
+  type INTEGER references TYPE_EQUIPMENT,
+  state State_EQUIPMENT
+);
+CREATE TABLE OBVERSATION (
+  id SERIAL PRIMARY KEY,
+  id_object INTEGER references OBJECT_OBVERSATION,
+  id_equpment INTEGER references EQUIPMENT;
+  note TEXT NOT NULL,
+  weather TEXT default NULL,
+  date DATE
+);
+-- insert
+INSERT INTO OBJECT_OBVERSATION (name, shape, brightness) VALUES ('полумесяц', 'безупречная', 100);
+INSERT INTO OBJECT_OBVERSATION (name, shape, brightness) VALUES ('звезды', 'шарообразные', 100);
+INSERT INTO OBVERSATION (id_object, id_equpment, note, date) VALUES (2, 1, 'почти не наблюдаются', '02.04.2005');
+INSERT INTO OBVERSATION (id_object, id_equpment, note, weather, date) VALUES (1, 1, 'похоже на Венеру. Географических контуров не наблюдается', 'Облачно', '02.04.2005');
+INSERT INTO TYPE_EQUIPMENT (type, purpose) VALUES ('контрольный экран', 'для управления и мониторинга');
+INSERT INTO EQUIPMENT (name, type, state) VALUES ('экран', 1, 'Включен');
+
+
+-- fetch 
+SELECT  FROM OBJECT_OBVERSATION;
+SELECT  FROM TYPE_EQUIPMENT;
+SELECT  FROM EQUIPMENT;
+SELECT  FROM OBVERSATION;
