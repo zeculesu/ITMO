@@ -1,4 +1,4 @@
-
+psql -h pg -d studs
 -- create
 CREATE TABLE OBJECT_OBVERSATION (
   id SERIAL PRIMARY KEY,

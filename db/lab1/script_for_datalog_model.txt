@@ -1,0 +1,43 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+
+ TABLE OBJECT {
+  id SERIAL [PRIMARY KEY]
+  name varchar(32) [NOT NULL]
+  shape TEXT [NOT NULL]
+  brightness INTEGER [default: 0]
+}
+TABLE TYPE_EQUIPMENT {
+  id SERIAL [PRIMARY KEY]
+  type TEXT [NOT NULL]
+  purpose TEXT [NOT NULL]
+}
+ TABLE EQUIPMENT {
+  id SERIAL [PRIMARY KEY]
+  name TEXT [NOT NULL]
+  type INTEGER
+  state State_EQUIPMENT
+}
+ TABLE OBSERVATION {
+  id SERIAL [PRIMARY KEY]
+  id_equpment INTEGER
+  id_object INTEGER
+  note TEXT [NOT NULL]
+  weather TEXT [default: NULL]
+  date DATE
+}
+Table OBSERVATION_EQUIPMENT{
+  id_observation INT [primary key]
+  id_equpment INT [primary key]  
+}
+
+Ref: EQUIPMENT.type > TYPE_EQUIPMENT.id // many-to-one
+
+Ref: OBSERVATION.id_object > OBJECT.id
+
+Ref: OBSERVATION.id > OBSERVATION_EQUIPMENT.id_observation
+
+Ref: OBSERVATION_EQUIPMENT.id_equpment < EQUIPMENT.id
+
+
