@@ -1,5 +1,3 @@
- psql -h pg -d studs << EOF
-
 CREATE TABLE OBJECT (
   id SERIAL PRIMARY KEY,
   name varchar(32) NOT NULL,
@@ -39,7 +37,8 @@ ADD COLUMN observation_count INTEGER DEFAULT 0;
 
 CREATE OR REPLACE FUNCTION update_observation_count()
 RETURNS TRIGGER AS $$
-BEGIN
+BEGIN 
+  IF(TG_OP = "INSERT") THEN
     UPDATE OBJECT
     SET observation_count = observation_count + 1
     WHERE id = NEW.id_object;
@@ -50,7 +49,7 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER observation_insert_trigger
 AFTER INSERT ON OBSERVATION
 FOR EACH ROW
-EXECUTE FUNCTION update_observation_count();
+EXECUTE PROCEDURE update_observation_count();
 
 INSERT INTO OBJECT (name, shape, brightness) VALUES ('полумесяц', 'безупречная', 100);
 INSERT INTO OBJECT (name, shape, brightness) VALUES ('звезды', 'шарообразные', 100);
@@ -73,4 +72,3 @@ SELECT * FROM EQUIPMENT;
 SELECT * FROM OBSERVATION_EQUIPMENT;
 SELECT * FROM OBSERVATION;
 SELECT * FROM FULL_OBSERVATION;
-EOF
