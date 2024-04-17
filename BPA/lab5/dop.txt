@@ -1,54 +1,49 @@
-org 26c
-arr: WORD 5E8
-outsymb: WORD 0x0A
-start: CLA
+ORG     0x26C
 
-s1: IN 0x19
-	AND	#0x40	
-	BEQ	s1
-	IN	0x18
-	CMP outsymb
-	BEQ STOP1
-	ST (arr)
+res:WORD 0x5D1
+first:WORD 0x5D1
+ans: WORD 0x0A
+temp:WORD ?
+OUT 0xC
 
-s2: IN 0x19
-	AND	#0x40	
-	BEQ	s2
-	IN	0x18
-	CMP outsymb
-	BEQ STOP2
-	SWAB
-	ADD (arr)
-	ST (arr)
-	
-	LD arr
-	INC
-	ST arr
-	
-	JUMP s1
-	
-STOP1:
-	ST (arr)
-	JUMP out1
+START:CLA
 
-STOP2:
-	LD arr
-	INC
-	ST arr
-	ST (arr)
-	JUMP out1
+f1:IN 0x19
+   AND #0x40	
+   BEQ f1
+   IN 0x18
+   ST (res)
+   ST temp
+   CMP ans
+   BEQ out1
+   CLA
+f2:IN 0x19
+   AND #0x40
+   BEQ f2
+   IN 0x18
+   SWAB
+   OR temp	
+   ST (res)
+   SUB temp
+   SWAB
+   CMP ans	
+   BEQ out1	
+   LD (res)+	
+   CLA
+   JUMP f1
 
-out1:
-	LD (arr)
-	SWAB
-	OUT 0xC
-	SWAB
-	OUT 0xC
-	CLA
-	LD arr
-	CMP outsymb
-	BEQ EXIT
-	LD -(arr) 
-	JUMP out1
+exit: 
+   HLT
 
- EXIT: HLT
+out1: LD (res)
+   SWAB
+   OUT 0xC
+   SWAB
+   OUT 0xC
+   CLA
+   LD res
+   CMP first
+   BEQ exit
+   LD -(res) 
+   JUMP out1
+
