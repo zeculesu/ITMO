@@ -1,49 +1,89 @@
 ORG     0x26C
+res:
+WORD 0x5D1
+first:
+WORD 0x5D1
 
-res:WORD 0x5D1
-first:WORD 0x5D1
-ans: WORD 0x0A
-temp:WORD ?
-OUT 0xC
+START:
+    CLA
+    ST (res)
+    OUT 0xC 
+input_c1:
+    CALL input 
+    CMP #0x0A
+    BEQ print
+   
+    CALL check
+    BCS input_c1   
+    ST (res) 
+   
+    CLA
+input_c2:
+    CALL input
+   
+    CMP #0x0A
+    BEQ print
+   
+    CALL check
+    BCS input_c2
+   
+    SWAB
+    OR (res)
+    ST (res)+
+   
+    CLA   
+    JUMP input_c1
+   
+print:    
+    LD (res)
+    SWAB   
+    OUT 0xC
+    SWAB   
+    OUT 0xC
+    CLA   
+    LD res
+    CMP first
+    BEQ exit
+    LD -(res)
+    JUMP print
 
-START:CLA
+exit:
+    HLT
 
-f1:IN 0x19
-   AND #0x40	
-   BEQ f1
-   IN 0x18
-   ST (res)
-   ST temp
-   CMP ans
-   BEQ out1
-   CLA
-f2:IN 0x19
-   AND #0x40
-   BEQ f2
-   IN 0x18
-   SWAB
-   OR temp	
-   ST (res)
-   SUB temp
-   SWAB
-   CMP ans	
-   BEQ out1	
-   LD (res)+	
-   CLA
-   JUMP f1
 
-exit: 
-   HLT
+    ; CF set - not matched
+    ; CF cleared - matched
+check:
+    SXTB ; костыль чтоб исправить существование знаковых чисел
+    CMP #0xA3 ; ё
+    BEQ check_succes 
+    CMP #0xB3 ; Ё
+    BEQ check_succes
+    ; даже несмотря на то что операнды знаковые - порядок сохраняется и (F)C0 < (F)FF
+    CMP #0xC0 
+    BLT check_fail
+    CMP #0xFF 
+    BEQ check_succes
+    BGE check_fail
+check_succes:
+    ; SWAB
+    ; AND #0x80
+    ; SWAB
+    ; ASL
+    AND check_mask
+    CLC
+    ; ROR
+    RET
+check_mask:
+    WORD 0x00FF
+check_fail:
+    CLC
+    CMC
+    RET
 
-out1: LD (res)
-   SWAB
-   OUT 0xC
-   SWAB
-   OUT 0xC
-   CLA
-   LD res
-   CMP first
-   BEQ exit
-   LD -(res) 
-   JUMP out1
-
+input:
+    IN 0x19
+    AND #0x40
+    BEQ input
+    IN 0x18
+    RET
