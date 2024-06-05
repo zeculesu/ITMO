@@ -1,0 +1,105 @@
+ORG		0x1F6
+TEST1_A:	WORD	0xF0F0 ; проверка на флаг N
+TEST1_B:	WORD	0x0F0F ; 0x1F7
+TEST1_ANS:	WORD	0xFFFF
+TEST1_RES:	WORD	?
+
+TEST2_A:	WORD	0x0338 ; проверка на флаг Z
+TEST2_B:	WORD	0x0338 ; 0x1FB
+TEST2_ANS:	WORD	0x0
+TEST2_RES:	WORD	?
+
+TEST3_A:	WORD	0x36B6 ; проверка на вычисление
+TEST3_B:	WORD	0x1536 ; 0x1FF
+TEST3_ANS:	WORD	0x2380
+TEST3_RES:	WORD	?
+
+FINAL:	WORD	?
+
+start:	CLA
+	CALL test1
+	CALL test2
+	CALL test3
+	CALL resum
+	HLT
+
+test1:	CLA
+	LD TEST1_A
+	WORD 0x91F7
+	HLT
+	CMP #0
+	BPL error1
+	CMP TEST1_ANS
+	BNE error1
+	CALL succes1
+	CLC
+	RET
+
+error1:	LD #0
+	ST TEST1_RES
+	CALL test2
+
+succes1:	LD #1
+	ST TEST1_RES
+	RET
+
+test2:	CLA
+	LD TEST2_A
+	WORD 0x91FB
+	HLT
+	BNE error2
+	CMP TEST2_ANS
+	BNE error2
+	CALL succes2
+	CLC
+	RET
+
+error2:	LD #0
+	ST TEST2_RES
+	CALL test3
+
+succes2:	LD #1
+	ST TEST2_RES
+	RET
+
+test3:	CLA
+	LD TEST3_A
+	WORD 0x91FF
+	HLT
+	CMP #0
+	BMI error3
+	CMP #0
+	BEQ error3
+	CMP TEST3_ANS
+	BNE error3
+	CALL succes3
+	CLC
+	RET
+
+error3:	LD #0
+	ST TEST3_RES
+	CALL resum
+
+succes3:	LD #1
+	ST TEST3_RES
+	RET
+
+resum:	LD TEST1_RES
+	CMP #1
+	BNE failed
+	LD TEST2_RES
+	CMP #1
+	BNE failed
+	LD TEST3_RES
+	CMP #1
+	BNE failed
+	CALL ok
+	RET
+
+failed:	LD #0
+	ST FINAL
+	HLT
+
+ok:	ST #1
+	ST FINAL
+	RET
